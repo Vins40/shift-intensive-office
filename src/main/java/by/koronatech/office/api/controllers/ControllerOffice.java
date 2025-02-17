@@ -1,8 +1,8 @@
 package by.koronatech.office.api.controllers;
 
 import by.koronatech.office.api.dto.CreateEmployeeDto;
+import by.koronatech.office.api.dto.GetDepartamentDto;
 import by.koronatech.office.api.dto.GetEmployeeDto;
-import by.koronatech.office.models.Department;
 import by.koronatech.office.services.EmployeeServicesImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,39 +18,40 @@ public class ControllerOffice {
 
     private final EmployeeServicesImpl services;
 
-    @GetMapping("department") // Получение всех отделов
-    public List<Department> divisionsList()
+    @GetMapping("/department") // Получение всех отделов
+    public List<GetDepartamentDto> divisionsList()
     {
         return services.divisionsList();
     }
 
-    @PostMapping("{id}") //Добавление сотрудника в отдел где id 'это id отдела
-    public GetEmployeeDto createEmployee (@PathVariable Long id, @RequestBody CreateEmployeeDto employeeDto)
+    @PostMapping("/add") //Добавление сотрудника в отдел
+    public List<GetEmployeeDto> createEmployee (@RequestBody CreateEmployeeDto employeeDto)
     {
-        return new GetEmployeeDto(null, null, null, null, false);
+        return services.createEmployee(employeeDto);
     }
 
-    @GetMapping("department/{id}") // Получение всех сотрудников отдела
-    public List<GetEmployeeDto> employeesToDepartmentList(@PathVariable Long id)
+    @GetMapping("/department/list") // Получение всех сотрудников отдела
+    public List<GetEmployeeDto> employeesToDepartmentList(@RequestParam String department)
     {
-        return null;
+       return services.employeesToDepartmentList(department);
     }
 
-    @PutMapping("{id}") //Сделать сотрудника менеджером отдела
-    public GetEmployeeDto changeRangEmployee (@PathVariable Long id, @RequestParam boolean manager)
+    @PutMapping("/manager/{id}") //Сделать сотрудника менеджером отдела
+    public GetEmployeeDto makeManagerDepartment (@PathVariable Long id)
     {
-        return new GetEmployeeDto(null, null, null, null, false);
+        return services.makeManagerDepartment(id);
     }
-    @PutMapping("employee/{id}") //Изменение существующей информации о сотруднике
-    public GetEmployeeDto changeDataEmployee (@PathVariable Long id, @RequestBody CreateEmployeeDto employeeDto)
+    @PutMapping("/employee/{id}") //Изменение существующей информации о сотруднике
+    public List<GetEmployeeDto> changeDataEmployee (@PathVariable Long id, @RequestBody GetEmployeeDto employeeDto)
     {
-        return new GetEmployeeDto(null, null, null, null, false);
+        return services.changeDataEmployee(id, employeeDto);
     }
 
-    @DeleteMapping("delete/{id}") //Удаление сотрудника из отдела
-    public void deleteEmployee (@PathVariable Long id)
+    @DeleteMapping("/delete/{id}") //Удаление сотрудника из отдела
+    public List<GetEmployeeDto> deleteEmployee (@PathVariable Long id)
     {
-
+            services.delete(id);
+            return services.listEmployee();
     }
 
 }

@@ -1,15 +1,12 @@
 package by.koronatech.office.models;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@Builder
+@RequiredArgsConstructor
+
 public class Employee {
     private Long id;
     private String name;
