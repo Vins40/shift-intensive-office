@@ -13,7 +13,7 @@ public interface EmployeeServices {
     GetDepartamentDto returnDepart(int id);
 
 
-    List<GetEmployeeDto> createEmployee (CreateEmployeeDto employeeDto);
+    List<GetEmployeeDto> createEmployee (CreateEmployeeDto employeeDto, Integer page, Integer size) throws IllegalAccessException;
 
 
     List<GetEmployeeDto> employeesToDepartmentList(String department);

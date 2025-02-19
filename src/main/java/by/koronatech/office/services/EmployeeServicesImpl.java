@@ -9,11 +9,13 @@ import by.koronatech.office.mapping.emplyoee.CreateEmployeeMapper;
 import by.koronatech.office.mapping.emplyoee.GetEmployeeMapper;
 import by.koronatech.office.models.Department;
 import by.koronatech.office.models.Employee;
+import by.koronatech.office.paginationServices.PaginationClass;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,7 +52,8 @@ public class EmployeeServicesImpl implements EmployeeServices  {
     }
 
     @Override
-    public List<GetEmployeeDto> createEmployee(CreateEmployeeDto employeeDto) {
+    public List<GetEmployeeDto> createEmployee(CreateEmployeeDto employeeDto, Integer page,Integer size) throws IllegalAccessException {
+
 
         if(employeeDto.getName()==null||employeeDto.getSalary()==null||employeeDto.getDepartment()==null)
         {
@@ -60,7 +63,8 @@ public class EmployeeServicesImpl implements EmployeeServices  {
         employee.setId(id);
         listEmployee.add(employee);
         id++;
-        return getEmployeeMapper.toDtos(listEmployee);
+
+        return PaginationClass.getPage(getEmployeeMapper.toDtos(listEmployee), page, size);
     }
 
     @Override

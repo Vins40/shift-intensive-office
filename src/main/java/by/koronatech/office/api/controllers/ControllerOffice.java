@@ -25,9 +25,11 @@ public class ControllerOffice {
     }
 
     @PostMapping("/add") //Добавление сотрудника в отдел
-    public List<GetEmployeeDto> createEmployee (@RequestBody CreateEmployeeDto employeeDto)
-    {
-        return services.createEmployee(employeeDto);
+    public List<GetEmployeeDto> createEmployee (@RequestParam (defaultValue = "1") String page,
+                                                @RequestParam (defaultValue = "5") String element,
+                                                @RequestBody CreateEmployeeDto employeeDto) throws IllegalAccessException {
+
+        return services.createEmployee(employeeDto, Integer.parseInt(page), Integer.parseInt(element));
     }
 
     @GetMapping("/department/list") // Получение всех сотрудников отдела

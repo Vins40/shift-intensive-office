@@ -8,7 +8,7 @@ import org.mapstruct.*;
 import java.util.List;
 
 
-@Mapper(config = BaseMapper.class, componentModel = "spring")
+@Mapper(config = BaseMapper.class)
 
 public interface GetEmployeeMapper extends BaseMapper<Employee, GetEmployeeDto>   {
 
